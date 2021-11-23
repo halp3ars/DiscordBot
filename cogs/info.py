@@ -8,6 +8,7 @@ from discord.colour import Color
 from discord.embeds import Embed, EmptyEmbed
 from discord.ext import commands
 from discord import client
+from discord.ext.commands.cog import Cog, _cog_special_method
 
 
 class Info(commands.Cog):
@@ -45,8 +46,3 @@ class Info(commands.Cog):
 
 def setup(client):
     client.add_cog(Info(client))
-
-
-
-
-
