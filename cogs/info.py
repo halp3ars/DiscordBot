@@ -19,7 +19,7 @@ class Info(commands.Cog):
     # Events 
     @commands.Cog.listener()
     async def on_ready(self):
-        print ("Bot is ready") 
+        print ("Bot load from the server") 
 
     # Commands 
     @commands.command()
@@ -43,6 +43,7 @@ class Info(commands.Cog):
         time_string = now.strftime(" %m.%d.%Y %H:%M")
         embed.set_footer(text= time_string + " Requested by " + ctx.author.name + "#" + ctx.author.discriminator + " | "  + id ,icon_url="https://png.pngtree.com/png-vector/20190118/ourmid/pngtree-vector-clock-icon-png-image_323861.jpg")
         await ctx.send(embed=embed)
+
 
 def setup(client):
     client.add_cog(Info(client))
