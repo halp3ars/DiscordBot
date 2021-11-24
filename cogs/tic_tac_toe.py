@@ -12,4 +12,4 @@ class Mini_Games(commands.Cog):
 
     #Commands
 def setup(client):
-    client.add_cog((client))
+    client.add_cog(Mini_Games(client)) 
