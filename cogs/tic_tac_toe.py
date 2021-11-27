@@ -9,7 +9,10 @@ class Mini_Games(commands.Cog):
 
     #Events
 
+    
 
     #Commands
+
+
 def setup(client):
     client.add_cog(Mini_Games(client)) 

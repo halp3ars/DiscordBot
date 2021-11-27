@@ -16,10 +16,7 @@ class Info(commands.Cog):
     def __init__(self,client):
         self.client = client
     
-    # Events 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print ("Bot load from the server") 
+    # Events  
 
     # Commands 
     @commands.command()
