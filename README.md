@@ -1,5 +1,12 @@
 # DiscordBot
 
+.. image:: https://img.shields.io/pypi/v/discord.py.svg
+   :target: https://pypi.python.org/pypi/discord.py
+   :alt: PyPI version info
+.. image:: https://img.shields.io/pypi/pyversions/discord.py.svg
+   :target: https://pypi.python.org/pypi/discord.py
+   :alt: PyPI supported Python versions
+
 Hey this is my first project. I want to start and make learn some basics, this is bot which contain some default commands such as info,serverinfo,help and e.t.c 
 I will understand if someone will say that is it a trash
  
