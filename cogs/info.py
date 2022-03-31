@@ -1,15 +1,6 @@
 import discord
 import datetime
-from discord import  User
-from discord import Message
-from discord import user
-from discord import colour
-from discord.colour import Color
-from discord.embeds import Embed, EmptyEmbed
 from discord.ext import commands
-from discord import client
-from discord.ext.commands.cog import Cog, _cog_special_method
-
 
 class Info(commands.Cog):
     
@@ -20,6 +11,7 @@ class Info(commands.Cog):
 
     # Commands 
     @commands.command()
+    @commands.guild_only()
     async def info(self ,ctx):
         embed = discord.Embed(title= "Information about " + ctx.author.name + "#" + ctx.author.discriminator,colour = 0xfcba03 ) 
         embed.set_thumbnail(url = ctx.author.avatar_url)

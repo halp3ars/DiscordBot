@@ -1,21 +1,19 @@
-import inspect
+from email import message
+from http import client
 import discord
-from discord import guild
 from discord.ext import commands
-from discord.ext.commands.core import has_permissions
-from discord.ext.commands.errors import CommandNotFound, NoEntryPointError 
-from discord_components import DiscordComponents, ComponentsBot, Button
-import discord_components
+import discord.embeds
+import datetime
+
+import datetime
+
+from numpy import delete
 
 class admin(commands.Cog):
 
     def __init__(self, client):
         self.client = client
 
-    #Events
-    @commands.Cog.listener()
-    async def on_ready(self):
-        DiscordComponents(commands)
 
     @commands.Cog.listener()
     async def on_command_error(ctx,error):
@@ -24,33 +22,46 @@ class admin(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send("You don't have permissons for this") # Part which check the permissons for do command
 
-    #Commands
+    #Commands 
 
+    #Ban command 
     @commands.command(name= "ban")
-    @commands.has_permissions(ban_members= True) 
-    async def ban_command(self,ctx, member : discord.Member, * , reason = None):
-        await member.ban(reason = reason) # Ban command with checking permissons 
-        await ctx.send(f"{member} have benn banned")
-    
-    @commands.command(name= "unban")
-    @commands.has_permissions(administrator = True)
-    async def unban_command(ctx, *, member):
-        banned_users = await ctx.guild.bans()
-        member_name, member_discriminator = member.split('#')
+    @commands.guild_only()
+    @commands.has_permissions(ban_members= True) #checking permissons (ban)
+    async def ban_command(self,ctx, member : discord.Member = None, * , reason = None,delete_message_days=1):
+        embed = discord.Embed(title = "Ban info")
+        embed.add_field(name= f"{member} has been banned", value= datetime.datetime.utcfromtimestamp.strftime(" %m.%d.%Y %H:%M"))
+        embed.set_footer(name= "Admin", value= f"Banned by {ctx.author.name} # {ctx.author.discriminator}")
+        await member.ban(reason = reason)
+        await ctx.send(embed=embed)
 
-        for ban_entry in banned_users:
-            user = ban_entry.user
-        
-        if (user.name, user.discriminator) == (member_name, member_discriminator):
-            await ctx.guild.unban(user)
-            await ctx.send(f"{user} have been unbanned sucessfully")
-            return
-    
+    #Unban command 
+    @commands.command(name='unban')
+    @commands.guild_only()
+    @commands.has_permissions(ban_members=True)#checking permissons (ban)
+    async def unban(self, ctx, userId):
+        user = discord.Object(id=userId)
+        await ctx.guild.unban(user)
+        await ctx.send(f"Unbanned {user}")
+
+
+    #Kick command 
     @commands.command(name= "kick")
-    @commands.has_permissions(kick_members = True)
-    async def kick_command(self, ctx, member: discord.Member, *, reason = None):
-            await member.kick(reason = reason)
-            await ctx.send(f"{member} have been kicked")
+    @commands.guild_only()
+    @commands.has_permissions(kick_members = True)#checking permissons (kick)
+    async def kick_command(self,ctx, member: discord.Member = None, * , reason = None):
+        await member.kick(reason = reason)
+        await ctx.send(f"{member} have been kicked | Reason - {reason}")
 
+    #Clear command
+    @commands.command(name= "clear")
+    @commands.guild_only()
+    @commands.has_permissions(manage_messages= True)
+    async def clear_chat(self,ctx,amount = 5):
+        await ctx.channel.purge(limit = amount)
+        await ctx.send("Message has been cleared")
+
+    
+       
 def setup(client):
     client.add_cog(admin(client))
